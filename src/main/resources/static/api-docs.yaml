@@ -1,0 +1,563 @@
+openapi: 3.0.1
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/users/topic/{id}:
+    put:
+      tags:
+      - user-controller
+      operationId: changeTopicBody
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: body
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteTopic
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics/{id}/upvote:
+    put:
+      tags:
+      - topic-controller
+      operationId: upvoteComment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics/{id}/downvote:
+    put:
+      tags:
+      - topic-controller
+      operationId: downvoteComment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/comments/{id}/upvote:
+    put:
+      tags:
+      - comment-controller
+      operationId: upvoteComment_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/comments/{id}/downvote:
+    put:
+      tags:
+      - comment-controller
+      operationId: downvoteComment_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/users/{nickname}/unblock:
+    put:
+      tags:
+      - admin-controller
+      operationId: unblockUser
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/users/{nickname}/promote:
+    put:
+      tags:
+      - admin-controller
+      operationId: promoteUser
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/users/{nickname}/block:
+    put:
+      tags:
+      - admin-controller
+      operationId: blockUser
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users:
+    get:
+      tags:
+      - user-controller
+      operationId: secureTest
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+    post:
+      tags:
+      - user-controller
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/password:
+    post:
+      tags:
+      - user-controller
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/login:
+    post:
+      tags:
+      - user-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics:
+    post:
+      tags:
+      - topic-controller
+      operationId: createTopic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNewTopicRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics/{id}/comment:
+    post:
+      tags:
+      - topic-controller
+      operationId: addCommentToTopic
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCommentRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/{nickname}:
+    get:
+      tags:
+      - user-controller
+      operationId: getById
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/users/{nickname}/topics:
+    get:
+      tags:
+      - user-controller
+      operationId: getUsersTopics
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+  /api/users/{nickname}/comments:
+    get:
+      tags:
+      - user-controller
+      operationId: getUsersComments
+      parameters:
+      - name: nickname
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /api/users/all:
+    get:
+      tags:
+      - user-controller
+      operationId: getAll
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics/{id}:
+    get:
+      tags:
+      - topic-controller
+      operationId: getById_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Topic'
+  /api/topics/{id}/comment/all:
+    get:
+      tags:
+      - topic-controller
+      operationId: getComments
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/topics/all:
+    get:
+      tags:
+      - topic-controller
+      operationId: getAll_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/all:
+    get:
+      tags:
+      - admin-controller
+      operationId: getAdmins
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /api/users/delete-self:
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteAccount
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/topics/{id}:
+    delete:
+      tags:
+      - admin-controller
+      operationId: deleteTopic_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/admin/comments/{id}:
+    delete:
+      tags:
+      - admin-controller
+      operationId: deleteComment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      properties:
+        mail:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        nick:
+          type: string
+    ChangePasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    CreateNewTopicRequest:
+      type: object
+      properties:
+        head:
+          type: string
+        category:
+          type: string
+        body:
+          type: string
+    NewCommentRequest:
+      type: object
+      properties:
+        body:
+          type: string
+    User:
+      type: object
+      properties:
+        nickName:
+          type: string
+        active:
+          type: boolean
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        body:
+          type: string
+        date:
+          type: string
+          format: date-time
+        upvotes:
+          type: integer
+          format: int32
+        downvotes:
+          type: integer
+          format: int32
+        topic:
+          $ref: '#/components/schemas/Topic'
+        user:
+          $ref: '#/components/schemas/User'
+    Topic:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        head:
+          type: string
+        category:
+          type: string
+        body:
+          type: string
+        date:
+          type: string
+          format: date-time
+        upvotes:
+          type: integer
+          format: int32
+        downvotes:
+          type: integer
+          format: int32
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        user:
+          $ref: '#/components/schemas/User'
